@@ -6,7 +6,6 @@ import UIHeading from "../ui/UIHeading";
 import UISpinButton from "../ui/UISpinButton";
 import WinnersList from "../components/WinnersList";
 import {FixedLayout} from "@vkontakte/vkui";
-import logo from '../img/wheel.svg'
 import Wheel from "../components/WheelContainer";
 
 interface IHomeProps {
@@ -15,10 +14,10 @@ interface IHomeProps {
 }
 
 const Home = ({id, fetchedUser}: IHomeProps) => (
-  <FixedLayout>
-    <div className={`bg-radial-blue h-screen p-4 disable-scroll`}>
+  <FixedLayout className={`h-screen flex bg-radial-blue`}>
+    <div className={`flex flex-col p-4 disable-scroll grow`}>
       <UIHeading className={`text-[36px] pt-2`}>Wheel of fortune</UIHeading>
-      <div className={`grid grid-rows-[1fr_1.5fr] gap-y-8 mt-8 h-fit`}>
+      <div className={`flex flex-col mt-8 space-y-8 grow`}>
         <div className={`grid grid-cols-[2fr_1fr] gap-x-4`}>
           <Wheel />
           <div className={`grid grid-rows-3 gap-y-4`}>
@@ -35,7 +34,7 @@ const Home = ({id, fetchedUser}: IHomeProps) => (
             </UISpinButton>
           </div>
         </div>
-        <WinnersList />
+        <WinnersList className={`flex-grow`}/>
       </div>
     </div>
   </FixedLayout>

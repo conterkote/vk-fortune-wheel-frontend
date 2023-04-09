@@ -6,6 +6,8 @@ import '@vkontakte/vkui/dist/vkui.css';
 import './index.css'
 import {IUserDataResponse} from "./models";
 import Wheel from "./pages/Home";
+import {Provider} from "react-redux";
+import store from "./store/store";
 
 function isCorrectUser(user: IUserDataResponse | unknown): user is IUserDataResponse {
   if (typeof user === 'object' && user) {
@@ -36,19 +38,21 @@ const App = () => {
   }, []);
 
   return (
-    <ConfigProvider>
-      <AdaptivityProvider>
-        <AppRoot>
-          <SplitLayout popout={popout}>
-            <SplitCol>
-              <View activePanel={activePanel}>
-                <Wheel id='home' fetchedUser={fetchedUser}/>
-              </View>
-            </SplitCol>
-          </SplitLayout>
-        </AppRoot>
-      </AdaptivityProvider>
-    </ConfigProvider>
+    <Provider store={store}>
+      <ConfigProvider>
+        <AdaptivityProvider>
+          <AppRoot>
+            <SplitLayout popout={popout}>
+              <SplitCol>
+                <View activePanel={activePanel}>
+                  <Wheel id='home' fetchedUser={fetchedUser}/>
+                </View>
+              </SplitCol>
+            </SplitLayout>
+          </AppRoot>
+        </AdaptivityProvider>
+      </ConfigProvider>
+    </Provider>
   );
 }
 
