@@ -1,0 +1,10 @@
+# Project exclude paths
+/src/components/WheelContainer.js
+/src/components/WinnerRow.js
+/src/components/WinnersList.js
+/src/pages/Home.js
+/src/ui/UICard.js
+/src/ui/UIHeading.js
+/src/ui/UISpinButton.js
+/src/App.js
+/src/models.js

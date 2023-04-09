@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Luckiest Guy';
+}
+
+.bg-radial-blue {
+    background: radial-gradient(85.48% 79.62% at 50% 50%, #75BDFF 0%, #020065 100%);
+}
+
+.bg-linear-red-button {
+    background: linear-gradient(241.78deg, #BC0000 27.02%, #8B0000 82.05%);
+}
+
+.bg-linear-blue-card {
+    background: linear-gradient(327.68deg, #588DD8 -2.66%, #324FA5 80.63%);
+}
+
+.bg-linear-blue {
+    background: linear-gradient(180deg, #3598DF 0%, #006BB8 100%);
+}
+
+.text-golden-shadow {
+    text-shadow: -1px -1px 0px #B46E00;
+}
+
+.disable-scroll {
+    overflow-x: hidden;
+}
+
+.inner-shadow {
+    box-shadow: inset 1px 5px 4px #1B379F;
+}
