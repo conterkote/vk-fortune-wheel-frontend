@@ -20,7 +20,7 @@ const fortuneApi = createApi({
     baseUrl : "https://vk-backend.onrender.com/",
     credentials: "same-origin",
   }),
-  endpoints : (builder) => ({
+  endpoints : (builder ) => ({
     authorize : builder.mutation<IAuthorizeResponse, IUserDataResponse>({
       query : (data) => ({
         url : "v1/users/authorize",
@@ -36,7 +36,8 @@ const fortuneApi = createApi({
         method : "GET",
       }),
       async onCacheEntryAdded(arg, {updateCachedData, cacheDataLoaded, cacheEntryRemoved}) {
-        const ws = new WebSocket('ws://localhost:3001/winners')
+        const ws = new WebSocket('ws://vk-backend.onrender.com/winners');
+        console.log('please')
         try {
           await cacheDataLoaded;
           ws.onopen = () => {

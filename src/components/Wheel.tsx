@@ -50,7 +50,7 @@ function Wheel({currentUser}: IWheelProps) {
   const spinWheel = async () => {
     setIsSpinLocal(true)
     setDelay(3)
-    await axios.post<IUserData, IStupidAxiosResponse>('http://localhost:3001/v1/wheel/spin', currentUser)
+    await axios.post<IUserData, IStupidAxiosResponse>('https://vk-backend.onrender.com/v1/wheel/spin', currentUser)
       .then(res => {
         setTransition('cubic-bezier(0.16, 1, 0.3, 1)')
         console.log(res)

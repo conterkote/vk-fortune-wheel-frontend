@@ -10,7 +10,7 @@ export interface IWheelState {
   lastWinning : string
   currentPrizes : string[]
   jackpot : number
-}
+};
 
 const initialState: IWheelState = {
   isSpinning : false,

@@ -26,6 +26,7 @@
         "@vkontakte/vkui": "5.1.0",
         "axios": "^1.0.0",
         "babel-eslint": "^10.1.0",
+        "caniuse-lite": "^1.0.30001477",
         "date-fns": "^2.29.3",
         "eruda": "^2.4.1",
         "eruda-code": "^2.0.0",

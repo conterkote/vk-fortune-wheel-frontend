@@ -1,27 +1,21 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.useAppSelector = exports.useAppDispatch = void 0;
-const toolkit_1 = require("@reduxjs/toolkit");
-const wheelSlice_1 = __importDefault(require("./slices/wheelSlice"));
-const react_redux_1 = require("react-redux");
-const fortuneApi_1 = __importDefault(require("./apis/fortuneApi"));
-const userSlice_1 = __importDefault(require("./slices/userSlice"));
-const winnersSlice_1 = __importDefault(require("./slices/winnersSlice"));
-const store = (0, toolkit_1.configureStore)({
+import { configureStore } from "@reduxjs/toolkit";
+import wheelSlice from "./slices/wheelSlice";
+import { useDispatch, useSelector } from "react-redux";
+import fortuneApi from "./apis/fortuneApi";
+import userSlice from "./slices/userSlice";
+import winnersSlice from "./slices/winnersSlice";
+const store = configureStore({
     reducer: {
-        [wheelSlice_1.default.name]: wheelSlice_1.default.reducer,
-        [userSlice_1.default.name]: userSlice_1.default.reducer,
-        [winnersSlice_1.default.name]: winnersSlice_1.default.reducer,
-        [fortuneApi_1.default.reducerPath]: fortuneApi_1.default.reducer
+        [wheelSlice.name]: wheelSlice.reducer,
+        [userSlice.name]: userSlice.reducer,
+        [winnersSlice.name]: winnersSlice.reducer,
+        [fortuneApi.reducerPath]: fortuneApi.reducer
     },
     middleware: getDefaultMiddleware => {
         return getDefaultMiddleware({})
-            .concat(fortuneApi_1.default.middleware);
+            .concat(fortuneApi.middleware);
     }
 });
-exports.useAppDispatch = react_redux_1.useDispatch;
-exports.useAppSelector = react_redux_1.useSelector;
-exports.default = store;
+export const useAppDispatch = useDispatch;
+export const useAppSelector = useSelector;
+export default store;
