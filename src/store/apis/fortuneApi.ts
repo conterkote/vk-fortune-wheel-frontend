@@ -5,13 +5,19 @@ import {
   IJackpotResponse,
   ISpinResponse,
   IUserData,
-  IUserDataResponse
+  IUserDataResponse, IWinner
 } from "../../models";
+
+export function isWinnerMessage(message : IWinner | IWinner[]): message is IWinner {
+  if (typeof message === 'object' && message) {
+    return Object(message).hasOwnProperty('first_name')
+  } else return false
+}
 
 const fortuneApi = createApi({
   reducerPath : "fortuneApi",
   baseQuery : fetchBaseQuery({
-    baseUrl : "http://localhost:3001/",
+    baseUrl : "https://vk-backend.onrender.com/",
     credentials: "same-origin",
   }),
   endpoints : (builder) => ({
@@ -23,6 +29,36 @@ const fortuneApi = createApi({
           ...data
         }
       })
+    }),
+    fetchWinners : builder.query<IWinner[] | IWinner, void>({
+      query : () => ({
+        url : "v1/winners/latest",
+        method : "GET",
+      }),
+      async onCacheEntryAdded(arg, {updateCachedData, cacheDataLoaded, cacheEntryRemoved}) {
+        const ws = new WebSocket('ws://localhost:3001/winners')
+        try {
+          await cacheDataLoaded;
+          ws.onopen = () => {
+            console.log('webSocket is opened')
+          }
+
+          const listener = (e: MessageEvent) => {
+            console.log(e)
+            const parsedData: IWinner = JSON.parse(e.data);
+            if (isWinnerMessage(parsedData)) {
+              updateCachedData(() => {
+                return parsedData
+              })
+            }
+          }
+          ws.addEventListener('message', listener)
+        } catch (e) {
+          console.warn('WebSocket', e)
+        }
+        await cacheEntryRemoved;
+        ws.close()
+      }
     }),
     spin : builder.mutation<ISpinResponse, IUserData>({
       query : (data) => ({
@@ -51,6 +87,6 @@ const fortuneApi = createApi({
   })
 })
 
-export const { useAuthorizeMutation, useSpinMutation, useFetchBalanceQuery, useFetchJackpotQuery } = fortuneApi
+export const { useAuthorizeMutation, useFetchWinnersQuery, useFetchBalanceQuery, useFetchJackpotQuery } = fortuneApi
 
 export default fortuneApi

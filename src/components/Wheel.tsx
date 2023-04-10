@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+// @ts-ignore
 import logo from '../img/wheel.svg';
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {
@@ -37,11 +38,12 @@ function Wheel({currentUser}: IWheelProps) {
   const [delay, setDelay] = useState<number>(3);
   const isSpinning = useAppSelector(selectIsWheelSpinning)
   const [isSpinLocal, setIsSpinLocal] = useState(false);
+  const [transition, setTransition] = useState('ease-in-out');
   const dispatch = useAppDispatch()
 
 
   const wheelStyle = {
-    transition: `transform ${delay}s ease-in-out`,
+    transition: `transform ${delay}s ${transition}`,
     transform: isSpinLocal ? "rotate(-5400deg)" : `rotate(${degrees < 22.5 ? "" : "-"}${String(degrees + 22.5)}deg)`,
   };
 
@@ -50,10 +52,11 @@ function Wheel({currentUser}: IWheelProps) {
     setDelay(3)
     await axios.post<IUserData, IStupidAxiosResponse>('http://localhost:3001/v1/wheel/spin', currentUser)
       .then(res => {
+        setTransition('cubic-bezier(0.16, 1, 0.3, 1)')
         console.log(res)
         const {prizeDegrees} = res.data
         const {sectionStartsAt, sectionEndsAt} = prizeDegrees
-        const stopDegree = 1080 + (randomInteger(sectionStartsAt, sectionEndsAt))
+        const stopDegree = (360 * 20) + (randomInteger(sectionStartsAt, sectionEndsAt))
         setDegrees(stopDegree - 45)
         setIsSpinLocal(false)
         dispatch(updateLastWinning(res.data.amount))
@@ -64,6 +67,7 @@ function Wheel({currentUser}: IWheelProps) {
           dispatch(updateBalance(res.data))
           dispatch(updateJackpot(res.data.jackpot))
           dispatch(changePopupState())
+          setTransition('ease-in-out')
         }, 3300)
       })
   }

@@ -1,22 +1,42 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IWinner} from "../../models";
+import {isWinnerMessage} from "../apis/fortuneApi";
+import {RootState} from "../store";
 
 interface IWinnersState {
-  lastWinners : []
+  lastWinners : IWinner[]
 }
 
 const initialState: IWinnersState = {
-
+  lastWinners : []
 }
 
 const winnersSlice = createSlice({
   name : 'winners',
   initialState,
   reducers : {
-    addWinner : () => {
-
+    addWinner : (state, action: PayloadAction<IWinner | IWinner[]>) => {
+      console.log(action.payload)
+      if (isWinnerMessage(action.payload)) {
+        state.lastWinners.push(action.payload)
+      } else {
+        return {
+          lastWinners : state.lastWinners.concat(action.payload)
+        }
+      }
     }
   }
 })
 
-export const {} = winnersSlice.actions
+export const selectLatestWinners = (state : RootState) => {
+  const copy = [...state.winners.lastWinners]
+  if (state.winners.lastWinners.length) {
+    const result = copy.sort((a, b) => {
+      return new Date(b.time).getTime() - new Date(a.time).getTime()
+    })
+    console.log(result);
+    return result
+  } else return []
+}
+export const {addWinner} = winnersSlice.actions
 export default winnersSlice;
