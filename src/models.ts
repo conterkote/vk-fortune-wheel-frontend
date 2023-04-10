@@ -15,7 +15,51 @@ export interface IUserDataResponse {
   is_closed:         boolean;
 }
 
+export type IUserData = Pick<IUserDataResponse, 'id' | 'photo_200' | 'first_name'>
+
+export interface IUserState {
+  userData ?: IUserData
+  balance : number
+}
+
 export interface City {
   id:    number;
   title: string;
 }
+
+export interface IAuthorizeResponse {
+  id:         string;
+  first_name: string;
+  photo_200:  string;
+  balance:    number;
+}
+
+export type IBalanceResponse = IAuthorizeResponse;
+
+export interface IJackpotResponse {
+  jackpot : number
+}
+
+export interface ISpinResponse {
+  amount : string
+  id:           number;
+  photo_200:    string;
+  first_name:   string;
+  balance:      number;
+  jackpot:      number;
+  prizeDegrees: IPrizeDegrees;
+}
+
+export interface IPrizeDegrees {
+  sectionStartsAt: number;
+  sectionEndsAt:   number;
+}
+
+export interface IStupidAxiosResponse {
+  data : ISpinResponse
+}
+
+export interface IWinner {
+  
+}
+

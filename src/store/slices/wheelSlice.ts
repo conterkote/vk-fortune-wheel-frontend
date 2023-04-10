@@ -1,38 +1,68 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
+import {act} from "react-dom/test-utils";
+import fortuneApi from "../apis/fortuneApi";
+import {number} from "prop-types";
 
 export interface IWheelState {
-  status : "stay" | "spinning" | "braking" // spinning || stay
+  isSpinning : boolean // spinning || stay
+  isPopupOpen : boolean
+  lastWinning : string
   currentPrizes : string[]
+  jackpot : number
 }
 
 const initialState: IWheelState = {
-  status : "stay",
-  currentPrizes : ["Jackpot", "250", "400", "10", "100", "150", "200", "750"]
+  isSpinning : false,
+  isPopupOpen : false,
+  lastWinning : "0",
+  currentPrizes : ["Jackpot", "250", "400", "10", "100", "150", "200", "750"],
+  jackpot : 0
 }
 
 const wheelSlice = createSlice({
   name : "wheel",
   initialState,
   reducers : {
-    changeState : (state) => {
-      console.log('changed')
+    changeState : (state, action : PayloadAction<boolean>) => {
       return {
         ...state,
-        status : (state.status === "stay" ? "spinning" : state.status === "spinning" ? "braking" : "stay")
+        isSpinning : action.payload
       }
     },
-    stop : (state, action) => {
+    updateJackpot : (state, action : PayloadAction<number>) => {
       return {
         ...state,
-        status : "stay"
+        jackpot : action.payload
+      }
+    },
+    updateLastWinning : (state, action : PayloadAction<string>) => {
+      return {
+        ...state,
+        lastWinning : action.payload
+      }
+    },
+    changePopupState : (state) => {
+      return {
+        ...state,
+        isPopupOpen : !state.isPopupOpen
       }
     }
-  }
+  },
+  extraReducers : builder =>
+    builder
+      .addMatcher(fortuneApi.endpoints.fetchJackpot.matchFulfilled, (state, action) => {
+        return {
+          ...state,
+          jackpot : action.payload.jackpot
+        }
+      })
 })
 
-export const selectCurrentStatus = (state: RootState) => state.wheel.status
-
-export const {changeState, stop} = wheelSlice.actions
+export const selectIsWheelSpinning = (state: RootState) => state.wheel.isSpinning
+export const selectCurrentJackpot = (state : RootState) => state.wheel.jackpot
+export const selectCurrentPopupState = (state : RootState) => state.wheel.isPopupOpen
+export const selectLastWinning = (state : RootState) => state.wheel.lastWinning
+export const {changeState, updateJackpot, changePopupState, updateLastWinning} = wheelSlice.actions
 
 export default wheelSlice

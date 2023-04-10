@@ -80,8 +80,11 @@ body {
 .wheel {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    transform: rotateZ(0deg);
+}
 
+.marker {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background-color: #bdd9e1;
 }
 
 .wheelActive {

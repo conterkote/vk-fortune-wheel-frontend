@@ -1,5 +1,5 @@
 # Project exclude paths
-/src/components/WheelContainer.js
+/src/components/Wheel.js
 /src/components/WinnerRow.js
 /src/components/WinnersList.js
 /src/pages/Home.js

@@ -1,63 +1,43 @@
-import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
-// @ts-ignore
-import logo from '../img/wheel.svg';
-import {isRef} from "../ui/UISpinButton";
-import {useAppSelector} from "../store/store";
-import {selectCurrentStatus} from "../store/slices/wheelSlice";
-import internal from "stream";
+import React from 'react';
+import Wheel from "./Wheel";
+import UICard from "../ui/UICard";
+import UIButton from "../ui/UIButton";
+import {decreaseBalance, selectCurrentBalance, selectCurrentUser} from "../store/slices/userSlice";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {IUserData} from "../models";
+import {changeState, selectCurrentJackpot, selectIsWheelSpinning} from "../store/slices/wheelSlice";
 
-function useWheelAnimation(element: MutableRefObject<HTMLImageElement>) {
-  if (element) {
+function WheelContainer() {
+  const balance = useAppSelector(selectCurrentBalance);
+  const jackpot = useAppSelector(selectCurrentJackpot);
+  const currentUser = useAppSelector(selectCurrentUser)
+  const dispatch = useAppDispatch()
+  const currentWheelStatus = useAppSelector(selectIsWheelSpinning)
 
+  const onClick = () => {
+    dispatch(changeState(true))
+    dispatch(decreaseBalance(100))
   }
-}
 
-function WheelContainer({}) {
-  const [isSpinning, setIsSpinning] = useState(false);
-  const wheelRef = useRef<null | HTMLImageElement>(null)
-  const [wheelElement, setWheelElement] = useState<React.MutableRefObject<HTMLImageElement | null>>(wheelRef);
-  const [degrees, setDegrees] = useState<null | number>(null);
-  const [delay, setDelay] = useState<number>(3);
-  const wheelStatus = useAppSelector(selectCurrentStatus)
-  const wheelStyle = {
-    transition: `transform ${delay}s ease-in-out`,
-    transform: isSpinning ? "rotate(7200deg)" : `rotate(${degrees}deg)`,
-  };
-
-  const spinWheel = () => {
-    setIsSpinning(true);
-    new Promise(resolve => {
-      setTimeout(() => {
-      }, 1000)
-      return resolve(Math.random() * 10000)
-    }).then(degree => {
-      setIsSpinning(false);
-      setDegrees(degree);
-      setTimeout(() => {
-        setDegrees(0)
-      }, 5000)
-    })
-  };
-
-  useEffect(() => {
-    setWheelElement(wheelRef)
-  }, []);
-
-  useEffect(() => {
-    if (wheelStatus === 'spinning') {
-      spinWheel()
-    }
-  }, [wheelStatus]);
-
+  const disabled = currentWheelStatus
 
   return (
-    <div className={`flex justify-center items-center inner-shadow rounded-2xl bg-linear-blue`}>
-      <img src={logo}
-           ref={wheelRef}
-           className={`wheel`}
-           style={wheelStyle}
-           onClick={!isSpinning ? spinWheel : undefined}
-      />
+    <div className={`grid grid-cols-[2fr_1fr] gap-x-4 md:gap-x-6 xl:gap-x-8`}>
+      <Wheel currentUser={currentUser as IUserData}/>
+      <div className={`grid grid-rows-3 gap-y-4 md:gap-y-6 xl:gap-y-8`}>
+        <UICard className={`text-[24px] md:text-[36px] xl:text-[48px]`}>
+          {`Jackpot ${jackpot}`}
+        </UICard>
+        <UICard className={`text-[24px] md:text-[36px] xl:text-[48px]`}>
+          {`Balance \n${balance}`}
+        </UICard>
+        <UIButton
+          onClick={onClick}
+          buttonClassName={`text-[24px] md:text-[36px] xl:text-[48px]`}
+          disabled={disabled}>
+          Spin Wheel
+        </UIButton>
+      </div>
     </div>
   );
 }
