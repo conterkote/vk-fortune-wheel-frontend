@@ -18,11 +18,15 @@ Features:
 3) cmd "tsc -p ."
 4) cmd "npm start"
 
+Inside App.tsx set variable "const dev = true"
+
 ## How test it into VK
 
 If you want to test it in VK, go to the link:
 https://dev.vk.com/mini-apps/getting-started
 
 And do the section "Running a mini-app inside VKontakte"
+
+Inside App.tsx set variable "const dev = false"
 
 Use "npm run tunnel"
