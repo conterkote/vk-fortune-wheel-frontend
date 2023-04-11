@@ -32,7 +32,7 @@ export const selectLatestWinners = (state : RootState) => {
   if (state.winners.lastWinners.length) {
     const result = copy.sort((a, b) => {
       return new Date(b.time).getTime() - new Date(a.time).getTime()
-    }).slice(0, 8)
+    }).slice(0, 5)
     return result
   } else return []
 }

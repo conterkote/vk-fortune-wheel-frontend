@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import {View, ScreenSpinner, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol} from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -39,16 +39,23 @@ let devUser = {
   "is_closed": false
 };
 
-const dev = false;
+const dev = true;
+const devWidth = 700;
 
 const App = () => {
   const dispatch = useAppDispatch()
   const currentUser = useAppSelector(selectCurrentUser)
 
-  const [useAuthorize] = useAuthorizeMutation();
+  const [useAuthorize, authorizeResult] = useAuthorizeMutation();
   useFetchBalanceQuery(currentUser as IUserData, {skip : !currentUser})
   useFetchJackpotQuery(undefined, {skip : !currentUser})
 
+  const [screenWidth, setScreenWidth] = useState<number | null>(null);
+
+  useEffect(() => {
+    setScreenWidth(window.screen.width)
+    // setScreenWidth(devWidth)
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -71,10 +78,10 @@ const App = () => {
     <ConfigProvider>
       <AdaptivityProvider>
         <AppRoot>
-          <SplitLayout popout={currentUser ? null : <ScreenSpinner size='large'/>}>
+          <SplitLayout popout={authorizeResult.isSuccess ? null : <ScreenSpinner size='large'/>}>
             <SplitCol>
               <View activePanel={'home'}>
-                <Home id='home'/>
+                <Home id='home' width={screenWidth}/>
               </View>
             </SplitCol>
           </SplitLayout>

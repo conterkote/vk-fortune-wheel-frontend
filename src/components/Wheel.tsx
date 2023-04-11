@@ -19,7 +19,6 @@ interface IWheelProps {
 }
 
 function randomInteger(min: number, max: number): number {
-  // случайное число от min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 }
@@ -76,7 +75,7 @@ function Wheel({currentUser}: IWheelProps) {
         <img src={logo}
              alt={"404"}
              ref={wheelRef}
-             className={`wheel w-[250px] md:w-[300px] 2xl:w-[320px]`}
+             className={`wheel w-[200px] md:w-[215px] xl:md:w-[230px] 2xl:w-[250px]`}
              style={wheelStyle}
         />
         <div className={`marker absolute w-[24px] h-[32px] md:w-[32px] md:h-[49px] xl:w-[48px] xl:h-[64px] top-3 left-1/2 -translate-x-1/2 rotate-180`}>
