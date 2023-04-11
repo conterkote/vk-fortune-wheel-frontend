@@ -30,3 +30,7 @@ And do the section "Running a mini-app inside VKontakte"
 Inside App.tsx set variable "const dev = false"
 
 Use "npm run tunnel"
+
+## How debug responsive design?
+
+Inside App.tsx set variable "const devWidth = your integer value"
