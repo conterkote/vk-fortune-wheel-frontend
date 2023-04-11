@@ -30,7 +30,7 @@ function WheelContainer({width} : {width : number}) {
         <UICard className={`text-[20px] sm:text-[22px] md:text-[26px] xl:text-[40px]`}>
           {`Jackpot ${jackpot}`}
         </UICard>
-        <UICard className={`text-[24px] md:text-[26px]`}>
+        <UICard className={`text-[20px] md:text-[26px]`}>
           {`Balance \n${balance}`}
         </UICard>
         {width <= 768 && <UIButton
