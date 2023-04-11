@@ -1,59 +1,28 @@
 [<img width="134" src="https://vk.com/images/apps/mini_apps/vk_mini_apps_logo.svg">](https://vk.com/services)
 
-# Create VK Mini App [![npm][npm]][npm-url] [![deps][deps]][deps-url]
+# What is it?
 
-## How to use
+This is a fullstack application for dev.vk.com, using my other repository vk-fortune-wheel-backend as the server.
 
-### With NPX
+The app is a wheel of fortune where each VK user has his own balance, one spin costs 100 coins, you might be the one to hit the jackpot! Huh, it's actually a win-win, since it's unlikely you'll get a prize of 10 coins 11 times in a row :)
 
-```bash
-npx @vkontakte/create-vk-mini-app [app-directory-name] [options]
-```
-[NPX](https://github.com/npm/npx) allows you to always use the **latest** version of the package without a global installation.
+Features:
+- Real-time updating of the winner's list via web sockets
+- Nice button animations 🕹
+- All winning logic happens on the server, which prevents any cheating on the front end, and the wheel stops where the server says
 
-### With installing the package globally
-Install the package globally via yarn
-```bash
-yarn global add @vkontakte/create-vk-mini-app
-```
-...or npm
-```bash
-npm install --global @vkontakte/create-vk-mini-app
-```
+## How to use on local
 
-and use as follows
+1) git clone https://github.com/conterkote/vk-fortune-wheel-frontend.git
+2) cmd "npm i"
+3) cmd "tsc -p ."
+4) cmd "npm start"
 
-```bash
-create-vk-mini-app [app-directory-name] [options]
-```
+## How test it into VK
 
-This way is less recommended because you will have to update the package yourself.
+If you want to test it in VK, go to the link:
+https://dev.vk.com/mini-apps/getting-started
 
-### Options
-Without `--zeit` and `--surge` options 
+And do the section "Running a mini-app inside VKontakte"
 
-#### `--zeit`
-Vercel (Zeit) deploy
-
-Firstly, you have to create Vercel account and connect it with your GitHub profile on [vercel.com](https://vercel.com)
-
-#### `--surge <surge-domain>`
-Surge deploy
-
-Firstly, you have to create Surge account and Surge-domain on [surge.sh](https://surge.sh)
-
-#### `--help`
-Prints the synopsis and a list of options
-
-## How to start work with app
-
-Go to created folder and run:  
-`yarn start` or  `npm start` to start dev server with hot reload on `localhost:10888`.
-
-`yarn run build` or `npm run build` to build production bundle, with tree-shaking, uglify and all this modern fancy stuff.
-
-[npm]: https://img.shields.io/npm/v/@vkontakte/create-vk-mini-app.svg
-[npm-url]: https://npmjs.com/package/@vkontakte/create-vk-mini-app
-
-[deps]: https://img.shields.io/david/vkcom/create-vk-mini-app.svg
-[deps-url]: https://david-dm.org/vkcom/create-vk-mini-app
+Use "npm run tunnel"
