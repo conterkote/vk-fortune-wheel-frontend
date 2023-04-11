@@ -39,7 +39,7 @@ let devUser = {
   "is_closed": false
 };
 
-const dev = false
+const dev = true
 
 const App = () => {
   const dispatch = useAppDispatch()

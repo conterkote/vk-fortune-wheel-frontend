@@ -25,7 +25,7 @@ function WinnersList({className} : IWinnersListProps) {
   return (
     <div className={`${className} flex flex-col inner-shadow overflow-y-hidden rounded-2xl bg-linear-blue`}>
       <UIHeading className={`text-[30px] py-4`}>Winners</UIHeading>
-      <div className={`px-4 flex-grow`}>
+      <div className={`px-4`}>
         {winnersRendered}
       </div>
     </div>

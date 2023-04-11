@@ -25,15 +25,15 @@ function WheelContainer() {
     <div className={`grid grid-cols-[2fr_1fr] gap-x-4 md:gap-x-6 xl:gap-x-8`}>
       <Wheel currentUser={currentUser as IUserData}/>
       <div className={`grid grid-rows-3 gap-y-4 md:gap-y-6 xl:gap-y-8`}>
-        <UICard className={`text-[24px] md:text-[36px] xl:text-[48px]`}>
+        <UICard className={`text-[24px] md:text-[36px] xl:text-[40px]`}>
           {`Jackpot ${jackpot}`}
         </UICard>
-        <UICard className={`text-[24px] md:text-[36px] xl:text-[48px]`}>
+        <UICard className={`text-[24px] md:text-[36px] xl:text-[40px]`}>
           {`Balance \n${balance}`}
         </UICard>
         <UIButton
           onClick={onClick}
-          buttonClassName={`text-[24px] md:text-[36px] xl:text-[48px]`}
+          buttonClassName={`text-[24px] md:text-[36px] xl:text-[40px]`}
           disabled={disabled}>
           Spin Wheel
         </UIButton>

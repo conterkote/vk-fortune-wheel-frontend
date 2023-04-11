@@ -16,7 +16,7 @@ const Home = ({id} : IHomeProps) => (
       <UIHeading className={`text-[36px] pt-2`}>Wheel of fortune</UIHeading>
       <div className={`flex flex-col mt-8 space-y-8 grow`}>
         <WheelContainer />
-        <WinnersList className={`flex-grow`}/>
+        <WinnersList className={`h-fit`}/>
       </div>
     </div>
   </FixedLayout>
