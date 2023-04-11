@@ -1,19 +1,14 @@
 import React from 'react';
 
-import {IUserDataResponse} from "../models";
-import UICard from "../ui/UICard";
 import UIHeading from "../ui/UIHeading";
-import UIButton from "../ui/UIButton";
 import WinnersList from "../components/WinnersList";
-// @ts-ignore
 import {FixedLayout} from "@vkontakte/vkui";
-import Wheel from "../components/Wheel";
 import WheelContainer from "../components/WheelContainer";
-import WinnerModal from "../components/WinnerModal";
 
 interface IHomeProps {
   id: string,
 }
+
 
 const Home = ({id} : IHomeProps) => (
   <FixedLayout className={`h-screen flex bg-radial-blue`}>

@@ -19,14 +19,12 @@ const userSlice = createSlice({
       }
     },
     updateBalance : (state, action : PayloadAction<ISpinResponse>) => {
-      console.log(action.payload)
       return {
         ...state,
         balance : action.payload.balance
       }
     },
     decreaseBalance : (state, action : PayloadAction<number>) => {
-      console.log(action.payload)
       return {
         ...state,
         balance : state.balance - action.payload

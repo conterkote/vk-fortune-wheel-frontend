@@ -16,7 +16,6 @@ const winnersSlice = createSlice({
   initialState,
   reducers : {
     addWinner : (state, action: PayloadAction<IWinner | IWinner[]>) => {
-      console.log(action.payload)
       if (isWinnerMessage(action.payload)) {
         state.lastWinners.push(action.payload)
       } else {
@@ -34,7 +33,6 @@ export const selectLatestWinners = (state : RootState) => {
     const result = copy.sort((a, b) => {
       return new Date(b.time).getTime() - new Date(a.time).getTime()
     })
-    console.log(result);
     return result
   } else return []
 }

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import bridge, {UserInfo} from '@vkontakte/vk-bridge';
+import React, {useEffect} from 'react';
+import bridge from '@vkontakte/vk-bridge';
 import {View, ScreenSpinner, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol} from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -42,11 +42,10 @@ let devUser = {
 const dev = false
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState('home');
   const dispatch = useAppDispatch()
   const currentUser = useAppSelector(selectCurrentUser)
 
-  const [useAuthorize, authorizeResult] = useAuthorizeMutation();
+  const [useAuthorize] = useAuthorizeMutation();
   useFetchBalanceQuery(currentUser as IUserData, {skip : !currentUser})
   useFetchJackpotQuery(undefined, {skip : !currentUser})
 
@@ -74,7 +73,7 @@ const App = () => {
         <AppRoot>
           <SplitLayout popout={currentUser ? null : <ScreenSpinner size='large'/>}>
             <SplitCol>
-              <View activePanel={activePanel}>
+              <View activePanel={'home'}>
                 <Home id='home'/>
               </View>
             </SplitCol>

@@ -36,8 +36,7 @@ const fortuneApi = createApi({
         method : "GET",
       }),
       async onCacheEntryAdded(arg, {updateCachedData, cacheDataLoaded, cacheEntryRemoved}) {
-        const ws = new WebSocket('ws://vk-backend.onrender.com/winners');
-        console.log('please')
+        const ws = new WebSocket('wss://vk-backend.onrender.com/winners');
         try {
           await cacheDataLoaded;
           ws.onopen = () => {
@@ -45,13 +44,17 @@ const fortuneApi = createApi({
           }
 
           const listener = (e: MessageEvent) => {
-            console.log(e)
-            const parsedData: IWinner = JSON.parse(e.data);
-            if (isWinnerMessage(parsedData)) {
-              updateCachedData(() => {
-                return parsedData
-              })
+            if (e.data === "Connected") {
+              console.log("Received message: " + e.data)
+            } else {
+              const parsedData = JSON.parse(e.data)
+              if (isWinnerMessage(parsedData)) {
+                updateCachedData(() => {
+                  return parsedData
+                })
+              }
             }
+
           }
           ws.addEventListener('message', listener)
         } catch (e) {

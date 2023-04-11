@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import UIHeading from "../ui/UIHeading";
-import {isWinnerMessage, useFetchWinnersQuery} from "../store/apis/fortuneApi";
+import {useFetchWinnersQuery} from "../store/apis/fortuneApi";
 import {addWinner, selectLatestWinners} from "../store/slices/winnersSlice";
 import {useAppDispatch, useAppSelector} from "../store/store";
 import WinnerRow from "./WinnerRow";
@@ -17,9 +17,6 @@ function WinnersList({className} : IWinnersListProps) {
 
   useEffect(() => {
     if (data) {
-      if (isWinnerMessage(data)) {
-        console.log(new Date(data.time))
-      }
       dispatch(addWinner(data))
     }
 

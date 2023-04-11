@@ -17,7 +17,6 @@ function WinnerRow({winnersData} : IWinnerRowProps) {
   useEffect(() => {
 
   }, [date]);
-  console.log(date)
   return (
     <div className={`font-text-gotham grid winner-row mb-3 px-2 py-2 items-center grid-cols-[1fr_2fr_1.5fr_2.5fr] gap-x-1`}>
       <img className={`w-8 rounded-full`} src={winnersData.photo_200} alt=""/>
@@ -27,6 +26,7 @@ function WinnerRow({winnersData} : IWinnerRowProps) {
           {winnersData.amount}
         </p>
         <img src={coins}
+             alt={`404`}
              className={`w-8 h-8 md:h-12 md:w-12 xl:h-16 xl:w-16 ml-1 md:ml-2`}/>
       </div>
       <p className={`font-text-gotham text-right text-[10px] md:text-[14px] xl:text-[20px] font-light text-gray-200`}>{date}</p>

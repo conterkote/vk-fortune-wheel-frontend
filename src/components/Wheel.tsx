@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-// @ts-ignore
 import logo from '../img/wheel.svg';
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {
@@ -9,8 +8,7 @@ import {
   updateJackpot,
   updateLastWinning
 } from "../store/slices/wheelSlice";
-import {ISpinResponse, IStupidAxiosResponse, IUserData} from "../models";
-// @ts-ignore
+import {IUserData} from "../models";
 import axios from "axios";
 import {updateBalance} from "../store/slices/userSlice";
 import WinnerModal from "./WinnerModal";
@@ -18,12 +16,6 @@ import WinnerModal from "./WinnerModal";
 
 interface IWheelProps {
   currentUser : IUserData
-}
-
-function isSpinResult(spinResult: ISpinResponse | null): spinResult is ISpinResponse {
-  if (typeof spinResult === 'object') {
-    return !!spinResult
-  } else return false
 }
 
 function randomInteger(min: number, max: number): number {
@@ -50,10 +42,9 @@ function Wheel({currentUser}: IWheelProps) {
   const spinWheel = async () => {
     setIsSpinLocal(true)
     setDelay(3)
-    await axios.post<IUserData, IStupidAxiosResponse>('https://vk-backend.onrender.com/v1/wheel/spin', currentUser)
+    await axios.post('https://vk-backend.onrender.com/v1/wheel/spin', currentUser)
       .then(res => {
         setTransition('cubic-bezier(0.16, 1, 0.3, 1)')
-        console.log(res)
         const {prizeDegrees} = res.data
         const {sectionStartsAt, sectionEndsAt} = prizeDegrees
         const stopDegree = (360 * 20) + (randomInteger(sectionStartsAt, sectionEndsAt))
@@ -83,6 +74,7 @@ function Wheel({currentUser}: IWheelProps) {
       <WinnerModal />
       <div className={`relative`}>
         <img src={logo}
+             alt={"404"}
              ref={wheelRef}
              className={`wheel md:w-[300px] xl:w-[400px]`}
              style={wheelStyle}
